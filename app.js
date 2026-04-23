@@ -3,17 +3,19 @@
  *
  * Renders TRUE franchise polygon boundaries (dissolved ZCTA outlines) instead
  * of centroid dots. Loads franchises + centroids + orphans + dissolved polygons,
- * builds one L.geoJSON layer per franchise, and highlights orphan ZIPs
- * (surrounded by contiguous territory they're not in) in bright red.
+ * builds one L.geoJSON layer per franchise, and highlights orphan ZIPs as
+ * FILLED RED POLYGONS on top of everything.
  *
  * Data files (data/):
  *   - franchises.json             — 139 franchises w/ colors + their ZIP lists
  *   - zip_centroids.json          — { "27231": [lat, lon], ... } (20,019 entries)
  *   - franchise_polygons.json     — FeatureCollection of 122 dissolved franchise outlines
- *   - orphans.json                — polygon-adjacency orphan list (187 orphans)
+ *   - orphans.json                — 209 orphan records (187 adjacency + 22 Raleigh purchased-unmapped)
+ *   - orphan_polygons.json        — FeatureCollection of 209 per-ZIP polygons for the orphan overlay
  *
- * Centroids are still used for orphan marker placement and zoom fallbacks for
- * franchises that have no polygon data (all PO-box only ZIPs).
+ * Orphan types:
+ *   - "adjacency"           → ZIP is surrounded by a neighbor franchise's territory
+ *   - "purchased_unmapped"  → ZIP is in Raleigh's purchased territory but not mapped in Fence360
  */
 
 // ----- Config -----
@@ -21,9 +23,12 @@ const POLY_FILL_OPACITY = 0.45;
 const POLY_STROKE_COLOR = '#1f2937';
 const POLY_STROKE_WEIGHT = 1;
 const POLY_STROKE_OPACITY = 0.7;
-const ORPHAN_RADIUS = 7;
-const ORPHAN_COLOR = '#ff1a1a';
-const ORPHAN_HALO_COLOR = '#ffffff';
+// Orphan overlay — filled red polygons rendered on top
+const ORPHAN_FILL_COLOR = '#ff1a1a';
+const ORPHAN_FILL_OPACITY = 0.55;
+const ORPHAN_STROKE_COLOR = '#7a0000';
+const ORPHAN_STROKE_WEIGHT = 1.5;
+const ORPHAN_STROKE_OPACITY = 0.95;
 const INITIAL_CENTER = [37.5, -96]; // continental US center
 const INITIAL_ZOOM = 4;
 
@@ -49,9 +54,10 @@ const state = {
   centroids: {},           // "zip" -> [lat, lon]
   franchisePolygons: {},   // fid (string) -> GeoJSON Feature (Polygon/MultiPolygon/GeometryCollection)
   orphans: [],             // array of orphan objects
+  orphanPolygonsFC: null,  // raw FeatureCollection of orphan polygons
   myFranchiseIds: new Set(),
   layers: {},              // franchiseId -> L.GeoJSON (or L.LayerGroup for franchises w/o polygons)
-  orphanLayer: null,       // L.LayerGroup of orphan markers
+  orphanLayer: null,       // L.geoJSON layer of red orphan polygons
   visible: new Set(),      // franchiseIds currently shown
   orphansVisible: true,
   orphansOnly: false,
@@ -83,16 +89,18 @@ async function loadJSON(path, label, pctStart, pctEnd) {
 // ----- Boot -----
 (async function init() {
   try {
-    const [franchisesDoc, centroidsDoc, orphansDoc, polygonsDoc] = await Promise.all([
-      loadJSON('data/franchises.json', 'franchises', 5, 20),
-      loadJSON('data/zip_centroids.json', 'ZIP centroids', 20, 40),
-      loadJSON('data/orphans.json', 'orphans', 40, 50),
-      loadJSON('data/franchise_polygons.json', 'franchise polygons', 50, 85),
+    const [franchisesDoc, centroidsDoc, orphansDoc, polygonsDoc, orphanPolysDoc] = await Promise.all([
+      loadJSON('data/franchises.json', 'franchises', 5, 15),
+      loadJSON('data/zip_centroids.json', 'ZIP centroids', 15, 30),
+      loadJSON('data/orphans.json', 'orphans', 30, 40),
+      loadJSON('data/franchise_polygons.json', 'franchise polygons', 40, 75),
+      loadJSON('data/orphan_polygons.json', 'orphan polygons', 75, 85),
     ]);
 
     state.franchises = franchisesDoc.franchises;
     state.centroids = centroidsDoc;
     state.orphans = orphansDoc.orphans;
+    state.orphanPolygonsFC = orphanPolysDoc;
     state.myFranchiseIds = new Set(franchisesDoc.my_franchises);
 
     // Index polygons by franchise id (string)
@@ -160,43 +168,46 @@ function buildLayers() {
     `(${emptyCount} franchises without polygon data)`
   );
 
-  // Orphan layer — bright red circles with white halo, rendered on top.
-  // Positions come from state.centroids since orphans.json no longer stores lat/lon.
-  const orphanLayer = L.layerGroup();
-  let orphansPlaced = 0;
-  for (const o of state.orphans) {
-    const ll = state.centroids[o.zip];
-    if (!ll) continue;
-    const halo = L.circleMarker(ll, {
-      radius: ORPHAN_RADIUS + 2,
-      color: ORPHAN_HALO_COLOR,
-      weight: 2,
-      fillColor: ORPHAN_COLOR,
-      fillOpacity: 0.0,
-      renderer: canvasRenderer,
-    });
-    const ring = L.circleMarker(ll, {
-      radius: ORPHAN_RADIUS,
-      color: ORPHAN_COLOR,
-      weight: 2.5,
-      fillColor: ORPHAN_COLOR,
-      fillOpacity: 0.35,
-      renderer: canvasRenderer,
-    });
-    const cur = o.current_franchise_name || '<em>unassigned</em>';
-    ring.bindPopup(
-      `<b style="color:${ORPHAN_COLOR}">ORPHAN ZIP ${o.zip}</b><br>` +
-      `Surrounded by <b>${escapeHtml(o.surrounded_by_name)}</b> territory ` +
-      `(${o.neighbor_vote}/${o.neighbor_count} adjacent polygons)<br>` +
-      `Currently: ${cur}`
-    );
-    orphanLayer.addLayer(halo);
-    orphanLayer.addLayer(ring);
-    orphansPlaced++;
-  }
+  // Orphan overlay — FILLED RED POLYGONS rendered on top of franchise polygons.
+  // Two types get the same red styling but different popup copy:
+  //   - "adjacency"          → ZIP surrounded by a neighbor franchise's territory
+  //   - "purchased_unmapped" → in Raleigh's purchased list but not mapped in Fence360
+  const orphanLayer = L.geoJSON(state.orphanPolygonsFC, {
+    style: {
+      color: ORPHAN_STROKE_COLOR,
+      weight: ORPHAN_STROKE_WEIGHT,
+      opacity: ORPHAN_STROKE_OPACITY,
+      fillColor: ORPHAN_FILL_COLOR,
+      fillOpacity: ORPHAN_FILL_OPACITY,
+    },
+    onEachFeature: (feat, lyr) => {
+      const p = feat.properties || {};
+      const z = p.zip;
+      const where = p.city ? `<b>${escapeHtml(p.city)}</b>${p.county ? ` — ${escapeHtml(p.county)} Co., NC` : ''}` : '';
+      let body;
+      if (p.orphan_type === 'purchased_unmapped') {
+        body =
+          `<b style="color:${ORPHAN_FILL_COLOR}">RALEIGH GAP — ZIP ${z}</b><br>` +
+          (where ? `${where}<br>` : '') +
+          `In Raleigh's purchased territory but <b>not yet mapped</b> in Fence360.<br>` +
+          `<em>Action: add to Raleigh's mapped territory.</em>`;
+      } else {
+        const cur = p.current_franchise_name || '<em>unassigned</em>';
+        const vote = (p.neighbor_vote != null && p.neighbor_count != null)
+          ? ` (${p.neighbor_vote}/${p.neighbor_count} adjacent polygons)` : '';
+        body =
+          `<b style="color:${ORPHAN_FILL_COLOR}">ORPHAN ZIP ${z}</b><br>` +
+          `Surrounded by <b>${escapeHtml(p.surrounded_by_name || '?')}</b> territory${vote}<br>` +
+          `Currently: ${escapeHtml(cur)}`;
+      }
+      lyr.bindPopup(body);
+    },
+  });
   state.orphanLayer = orphanLayer;
   orphanLayer.addTo(map);
-  console.log(`[sfr-territory-map] placed ${orphansPlaced} orphan markers`);
+  const adj = (state.orphanPolygonsFC.features || []).filter(f => f.properties.orphan_type === 'adjacency').length;
+  const gap = (state.orphanPolygonsFC.features || []).filter(f => f.properties.orphan_type === 'purchased_unmapped').length;
+  console.log(`[sfr-territory-map] rendered ${adj + gap} orphan polygons (${adj} adjacency + ${gap} Raleigh gaps)`);
 }
 
 // ----- Build the right-side control panel -----
