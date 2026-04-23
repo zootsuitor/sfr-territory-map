@@ -119,6 +119,28 @@
       border-radius: 50%;
     }
 
+    /* Hover tooltip for ZIP polygons */
+    .zip-hover-tip {
+      background: #fff !important;
+      border: 1px solid #111827 !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+      padding: 5px 8px !important;
+      font-size: 12px !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      color: #111827 !important;
+      border-radius: 4px !important;
+      pointer-events: none !important;
+    }
+    .zip-hover-tip::before { border-top-color: #111827 !important; }
+    .zip-tip { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .zip-tip .swatch-inline {
+      width: 10px; height: 10px; border-radius: 2px;
+      border: 1.5px solid #111827; flex-shrink: 0;
+    }
+    .zip-tip .fr { font-weight: 500; color: #374151; }
+    .orphan-tip { border-color: var(--orphan-red) !important; }
+    .orphan-tip::before { border-top-color: var(--orphan-red) !important; }
+
     /* compact on small screens */
     @media (max-width: 800px) {
       :root { --panel-width: 260px; }
@@ -142,12 +164,12 @@
 
   <div id="legend">
     <div style="font-weight: 600; margin-bottom: 4px;">Legend</div>
-    <div class="row"><span class="swatch" style="background:#E53935"></span>SFR Raleigh</div>
+    <div class="row"><span class="swatch" style="background:#1565C0"></span>SFR Raleigh</div>
     <div class="row"><span class="swatch" style="background:#1E88E5"></span>SFR Atlanta</div>
     <div class="row"><span class="swatch" style="background:#43A047"></span>SFR Triad</div>
-    <div class="row"><span class="orphan-swatch"></span>Orphan ZIP (surrounded, unassigned)</div>
+    <div class="row"><span class="orphan-swatch"></span>Orphan / Gap ZIP (red)</div>
     <div style="margin-top: 6px; color: #888; font-size: 11px;">
-      All other franchises: auto-colored
+      Hover any ZIP for details. Other franchises: auto-colored.
     </div>
   </div>
 

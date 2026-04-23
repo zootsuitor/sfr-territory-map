@@ -1,15 +1,14 @@
 /**
  * SFR Territory Map — Milestone 1 Step 3
  *
- * Renders TRUE franchise polygon boundaries (dissolved ZCTA outlines) instead
- * of centroid dots. Loads franchises + centroids + orphans + dissolved polygons,
- * builds one L.geoJSON layer per franchise, and highlights orphan ZIPs as
- * FILLED RED POLYGONS on top of everything.
+ * Renders TRUE franchise polygon boundaries (per-ZIP, colored by franchise)
+ * with hover tooltips showing ZIP + franchise. Overlays orphan ZIPs as
+ * FILLED RED POLYGONS on top.
  *
  * Data files (data/):
  *   - franchises.json             — 139 franchises w/ colors + their ZIP lists
  *   - zip_centroids.json          — { "27231": [lat, lon], ... } (20,019 entries)
- *   - franchise_polygons.json     — FeatureCollection of 122 dissolved franchise outlines
+ *   - zcta_polygons.json          — FeatureCollection of 15,223 per-ZIP polygons tagged with franchise_id
  *   - orphans.json                — 209 orphan records (187 adjacency + 22 Raleigh purchased-unmapped)
  *   - orphan_polygons.json        — FeatureCollection of 209 per-ZIP polygons for the orphan overlay
  *
@@ -19,10 +18,14 @@
  */
 
 // ----- Config -----
-const POLY_FILL_OPACITY = 0.45;
+const POLY_FILL_OPACITY = 0.50;
 const POLY_STROKE_COLOR = '#1f2937';
-const POLY_STROKE_WEIGHT = 1;
-const POLY_STROKE_OPACITY = 0.7;
+// Internal ZIP seams hidden by default — stroke only shows on hover highlight
+const POLY_STROKE_WEIGHT = 0;
+const POLY_STROKE_OPACITY = 0;
+const HOVER_STROKE_COLOR = '#111827';
+const HOVER_STROKE_WEIGHT = 2;
+const HOVER_FILL_OPACITY = 0.72;
 // Orphan overlay — filled red polygons rendered on top
 const ORPHAN_FILL_COLOR = '#ff1a1a';
 const ORPHAN_FILL_OPACITY = 0.55;
@@ -52,15 +55,16 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r
 const state = {
   franchises: {},          // keyed by numeric id (string form)
   centroids: {},           // "zip" -> [lat, lon]
-  franchisePolygons: {},   // fid (string) -> GeoJSON Feature (Polygon/MultiPolygon/GeometryCollection)
+  zctaFC: null,            // FeatureCollection of per-ZIP polygons (primary render data)
   orphans: [],             // array of orphan objects
   orphanPolygonsFC: null,  // raw FeatureCollection of orphan polygons
   myFranchiseIds: new Set(),
-  layers: {},              // franchiseId -> L.GeoJSON (or L.LayerGroup for franchises w/o polygons)
+  layers: {},              // franchiseId -> L.GeoJSON layer (covers all that franchise's ZIPs)
   orphanLayer: null,       // L.geoJSON layer of red orphan polygons
   visible: new Set(),      // franchiseIds currently shown
   orphansVisible: true,
   orphansOnly: false,
+  hoverTooltip: null,      // L.tooltip instance used for the current hover
 };
 
 // ----- Loading UI -----
@@ -89,24 +93,20 @@ async function loadJSON(path, label, pctStart, pctEnd) {
 // ----- Boot -----
 (async function init() {
   try {
-    const [franchisesDoc, centroidsDoc, orphansDoc, polygonsDoc, orphanPolysDoc] = await Promise.all([
-      loadJSON('data/franchises.json', 'franchises', 5, 15),
-      loadJSON('data/zip_centroids.json', 'ZIP centroids', 15, 30),
-      loadJSON('data/orphans.json', 'orphans', 30, 40),
-      loadJSON('data/franchise_polygons.json', 'franchise polygons', 40, 75),
-      loadJSON('data/orphan_polygons.json', 'orphan polygons', 75, 85),
+    const [franchisesDoc, centroidsDoc, orphansDoc, zctaDoc, orphanPolysDoc] = await Promise.all([
+      loadJSON('data/franchises.json', 'franchises', 5, 10),
+      loadJSON('data/zip_centroids.json', 'ZIP centroids', 10, 20),
+      loadJSON('data/orphans.json', 'orphans', 20, 25),
+      loadJSON('data/zcta_polygons.json', 'ZIP polygons', 25, 78),
+      loadJSON('data/orphan_polygons.json', 'orphan overlay', 78, 85),
     ]);
 
     state.franchises = franchisesDoc.franchises;
     state.centroids = centroidsDoc;
     state.orphans = orphansDoc.orphans;
+    state.zctaFC = zctaDoc;
     state.orphanPolygonsFC = orphanPolysDoc;
     state.myFranchiseIds = new Set(franchisesDoc.my_franchises);
-
-    // Index polygons by franchise id (string)
-    for (const f of (polygonsDoc.features || [])) {
-      state.franchisePolygons[String(f.properties.id)] = f;
-    }
 
     setLoad(88, 'Building layers…');
     await new Promise(r => setTimeout(r, 20)); // let UI breathe
@@ -128,43 +128,90 @@ async function loadJSON(path, label, pctStart, pctEnd) {
   }
 })();
 
-// ----- Build one polygon layer per franchise -----
+// ----- Build per-ZIP polygon layers, grouped by franchise -----
 function buildLayers() {
+  // Bucket features by franchise id
+  const byFranchise = {};
+  for (const f of state.zctaFC.features) {
+    const fid = String(f.properties.franchise_id);
+    (byFranchise[fid] ||= []).push(f);
+  }
+
+  // Shared hover handler — sets highlight + tooltip with ZIP + franchise
+  const onFeature = (feat, lyr) => {
+    const p = feat.properties || {};
+    const fr = state.franchises[String(p.franchise_id)] || {};
+    const color = fr.color || '#666';
+    const labelHtml =
+      `<div class="zip-tip"><b>ZIP ${escapeHtml(p.zip || '?')}</b>` +
+      `<span class="swatch-inline" style="background:${color}"></span>` +
+      `<span class="fr">${escapeHtml(fr.name || '?')}</span></div>`;
+
+    lyr.on('mouseover', (e) => {
+      const t = e.target;
+      t.setStyle({
+        color: HOVER_STROKE_COLOR,
+        weight: HOVER_STROKE_WEIGHT,
+        opacity: 1,
+        fillOpacity: HOVER_FILL_OPACITY,
+      });
+      if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) t.bringToFront();
+      t.bindTooltip(labelHtml, {
+        sticky: true,
+        direction: 'top',
+        offset: [0, -8],
+        opacity: 0.95,
+        className: 'zip-hover-tip',
+      }).openTooltip(e.latlng);
+    });
+    lyr.on('mouseout', (e) => {
+      e.target.setStyle({
+        color: POLY_STROKE_COLOR,
+        weight: POLY_STROKE_WEIGHT,
+        opacity: POLY_STROKE_OPACITY,
+        fillOpacity: POLY_FILL_OPACITY,
+      });
+      e.target.closeTooltip();
+    });
+    // Click = same-info popup (persistent)
+    lyr.on('click', (e) => {
+      L.popup({ offset: [0, -4] })
+        .setLatLng(e.latlng)
+        .setContent(
+          `<b style="color:${color}">ZIP ${escapeHtml(p.zip)}</b><br>` +
+          `Franchise: <b>${escapeHtml(fr.name || 'unassigned')}</b><br>` +
+          (p.state ? `<span style="color:#94a3b8">${escapeHtml(p.state)}</span>` : '')
+        )
+        .openOn(map);
+    });
+  };
+
   let polyCount = 0;
   let emptyCount = 0;
   for (const fid of Object.keys(state.franchises)) {
     const fr = state.franchises[fid];
-    const feature = state.franchisePolygons[fid];
-    if (!feature || !feature.geometry) {
+    const feats = byFranchise[fid];
+    if (!feats || feats.length === 0) {
       // No polygon data for this franchise (all PO-box ZIPs, or zero zips).
-      // Use empty LayerGroup so toggle/search still work without errors.
       state.layers[fid] = L.layerGroup();
       emptyCount++;
       continue;
     }
-    const layer = L.geoJSON(feature, {
-      style: {
+    const layer = L.geoJSON({ type: 'FeatureCollection', features: feats }, {
+      style: () => ({
         color: POLY_STROKE_COLOR,
         weight: POLY_STROKE_WEIGHT,
         opacity: POLY_STROKE_OPACITY,
         fillColor: fr.color,
         fillOpacity: POLY_FILL_OPACITY,
-      },
-      onEachFeature: (feat, lyr) => {
-        const p = feat.properties || {};
-        const gz = p.geom_zip_count ?? fr.zip_count;
-        lyr.bindPopup(
-          `<b style="color:${fr.color}">${escapeHtml(fr.name)}</b><br>` +
-          `${fr.zip_count} ZIPs assigned` +
-          (gz !== fr.zip_count ? ` <span style="color:#94a3b8">(${gz} with polygons)</span>` : '')
-        );
-      },
+      }),
+      onEachFeature: onFeature,
     });
     state.layers[fid] = layer;
     polyCount++;
   }
   console.log(
-    `[sfr-territory-map] built ${polyCount} franchise polygon layers ` +
+    `[sfr-territory-map] built ${polyCount} franchise layers from ${state.zctaFC.features.length} ZIP polygons ` +
     `(${emptyCount} franchises without polygon data)`
   );
 
@@ -185,6 +232,7 @@ function buildLayers() {
       const z = p.zip;
       const where = p.city ? `<b>${escapeHtml(p.city)}</b>${p.county ? ` — ${escapeHtml(p.county)} Co., NC` : ''}` : '';
       let body;
+      const typeLabel = p.orphan_type === 'purchased_unmapped' ? 'RALEIGH GAP' : 'ORPHAN';
       if (p.orphan_type === 'purchased_unmapped') {
         body =
           `<b style="color:${ORPHAN_FILL_COLOR}">RALEIGH GAP — ZIP ${z}</b><br>` +
@@ -201,6 +249,18 @@ function buildLayers() {
           `Currently: ${escapeHtml(cur)}`;
       }
       lyr.bindPopup(body);
+      // Hover tooltip — concise ZIP + type indicator
+      const tipHtml =
+        `<div class="zip-tip"><b style="color:${ORPHAN_FILL_COLOR}">${typeLabel} — ZIP ${escapeHtml(z)}</b>` +
+        (where ? `<div style="font-size:11px;color:#475569;margin-top:2px">${where}</div>` : '') +
+        `</div>`;
+      lyr.bindTooltip(tipHtml, {
+        sticky: true,
+        direction: 'top',
+        offset: [0, -8],
+        opacity: 0.95,
+        className: 'zip-hover-tip orphan-tip',
+      });
     },
   });
   state.orphanLayer = orphanLayer;
