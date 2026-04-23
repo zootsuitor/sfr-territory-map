@@ -83,7 +83,10 @@ function hideLoader() {
 
 async function loadJSON(path, label, pctStart, pctEnd) {
   setLoad(pctStart, `Loading ${label}…`);
-  const res = await fetch(path, { cache: 'force-cache' });
+  // cache: 'default' lets the browser revalidate with the server instead of
+  // blindly reusing a stale copy (prior `force-cache` caused color changes to
+  // stick in the browser even after redeploy).
+  const res = await fetch(path, { cache: 'default' });
   if (!res.ok) throw new Error(`${path}: ${res.status}`);
   const data = await res.json();
   setLoad(pctEnd, `${label} loaded`);
