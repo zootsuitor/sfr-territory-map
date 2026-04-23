@@ -365,17 +365,40 @@ function buildLayers() {
 }
 
 // ----- County borders inside Raleigh + Triad territories -----
-// Renders each NC county polygon outline in a darker shade of its franchise's
-// fill color. Hover reveals the county name and franchise.
+// Renders each NC county outline in a darker shade of its franchise's fill
+// color. Hover reveals the county name and franchise — but only when the
+// cursor is touching the border itself, not anywhere inside the polygon.
+// That's why we convert each Polygon/MultiPolygon into a MultiLineString:
+// in Leaflet's canvas renderer, polygons hit-test their entire fill area
+// (even with fillOpacity:0), which would block the underlying ZIP tooltips.
+// Polylines only hit-test the stroke.
 function buildCountyBorders(fc) {
-  const layer = L.geoJSON(fc, {
+  const lineFC = {
+    type: 'FeatureCollection',
+    features: fc.features.map((f) => {
+      const g = f.geometry;
+      let lines;
+      if (g.type === 'Polygon') {
+        lines = g.coordinates;
+      } else if (g.type === 'MultiPolygon') {
+        lines = g.coordinates.flat();
+      } else {
+        lines = [];
+      }
+      return {
+        type: 'Feature',
+        properties: f.properties,
+        geometry: { type: 'MultiLineString', coordinates: lines },
+      };
+    }),
+  };
+  const layer = L.geoJSON(lineFC, {
     style: (feat) => {
       const p = feat.properties || {};
       return {
         color: COUNTY_BORDER_COLORS[p.franchise] || '#333',
         weight: COUNTY_BORDER_WEIGHT,
         opacity: 0.85,
-        fillOpacity: 0,
         lineJoin: 'round',
         lineCap: 'round',
       };
