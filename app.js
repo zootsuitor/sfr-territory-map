@@ -233,7 +233,13 @@ function buildLayers() {
     onEachFeature: (feat, lyr) => {
       const p = feat.properties || {};
       const z = p.zip;
-      const where = p.city ? `<b>${escapeHtml(p.city)}</b>${p.county ? ` — ${escapeHtml(p.county)} Co., NC` : ''}` : '';
+      // Build a location string: "City — County Co., STATE" with whatever we have.
+      const st = p.state || '';
+      const parts = [];
+      if (p.city) parts.push(`<b>${escapeHtml(p.city)}</b>`);
+      if (p.county) parts.push(`${escapeHtml(p.county)} Co.${st ? ', ' + escapeHtml(st) : ''}`);
+      else if (st) parts.push(escapeHtml(st));
+      const where = parts.join(' — ');
       let body, typeLabel;
       if (p.orphan_type === 'purchased_unmapped') {
         typeLabel = 'RALEIGH GAP';
@@ -260,10 +266,10 @@ function buildLayers() {
           `Currently: ${escapeHtml(cur)}`;
       }
       lyr.bindPopup(body);
-      // Hover tooltip — concise ZIP + type indicator
+      // Hover tooltip — show ZIP, type, and city/county so Cam can identify the area at a glance
       const tipHtml =
         `<div class="zip-tip"><b style="color:${ORPHAN_FILL_COLOR}">${typeLabel} — ZIP ${escapeHtml(z)}</b>` +
-        (where ? `<div style="font-size:11px;color:#475569;margin-top:2px">${where}</div>` : '') +
+        (where ? `<div class="zip-tip-loc">${where}</div>` : '') +
         `</div>`;
       lyr.bindTooltip(tipHtml, {
         sticky: true,

@@ -19,7 +19,9 @@
       "surrounded_by_name": "Albany",
       "neighbor_vote": 8,
       "neighbor_count": 10,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Greenville",
+      "county": "Greene"
     },
     {
       "zip": "92683",
@@ -29,7 +31,9 @@
       "surrounded_by_name": "Orange County CA",
       "neighbor_vote": 8,
       "neighbor_count": 9,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Westminster",
+      "county": "Orange"
     },
     {
       "zip": "29640",
@@ -39,7 +43,9 @@
       "surrounded_by_name": "Greenville",
       "neighbor_vote": 7,
       "neighbor_count": 7,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Easley",
+      "county": "Pickens"
     },
     {
       "zip": "29945",
@@ -49,7 +55,9 @@
       "surrounded_by_name": "Savannah",
       "neighbor_vote": 7,
       "neighbor_count": 11,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Yemassee",
+      "county": "Colleton"
     },
     {
       "zip": "40065",
@@ -59,7 +67,9 @@
       "surrounded_by_name": "Greater Lexington",
       "neighbor_vote": 7,
       "neighbor_count": 10,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Shelbyville",
+      "county": "Shelby"
     },
     {
       "zip": "92407",
@@ -69,7 +79,9 @@
       "surrounded_by_name": "Inland Empire",
       "neighbor_vote": 7,
       "neighbor_count": 10,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "San Bernardino",
+      "county": "San Bernardino"
     },
     {
       "zip": "94550",
@@ -79,7 +91,9 @@
       "surrounded_by_name": "San Jose",
       "neighbor_vote": 7,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Livermore",
+      "county": "Alameda"
     },
     {
       "zip": "06063",
@@ -89,7 +103,9 @@
       "surrounded_by_name": "Hartford",
       "neighbor_vote": 6,
       "neighbor_count": 9,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Pleasant Valley",
+      "county": "Litchfield"
     },
     {
       "zip": "27229",
@@ -99,7 +115,9 @@
       "surrounded_by_name": "Fayetteville",
       "neighbor_vote": 6,
       "neighbor_count": 7,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Candor",
+      "county": "Montgomery"
     },
     {
       "zip": "29824",
@@ -109,7 +127,9 @@
       "surrounded_by_name": "Augusta",
       "neighbor_vote": 6,
       "neighbor_count": 9,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Edgefield",
+      "county": "Edgefield"
     },
     {
       "zip": "32134",
@@ -119,7 +139,9 @@
       "surrounded_by_name": "Volusia",
       "neighbor_vote": 6,
       "neighbor_count": 10,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Salt Springs",
+      "county": "Marion"
     },
     {
       "zip": "33547",
@@ -129,7 +151,9 @@
       "surrounded_by_name": "Pinellas County",
       "neighbor_vote": 6,
       "neighbor_count": 9,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Lithia",
+      "county": "Hillsborough"
     },
     {
       "zip": "36558",
@@ -139,7 +163,9 @@
       "surrounded_by_name": "North Shore",
       "neighbor_vote": 6,
       "neighbor_count": 7,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Millry",
+      "county": "Washington"
     },
     {
       "zip": "37322",
@@ -149,7 +175,9 @@
       "surrounded_by_name": "Chattanooga",
       "neighbor_vote": 6,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Decatur",
+      "county": "Meigs"
     },
     {
       "zip": "53098",
@@ -159,7 +187,9 @@
       "surrounded_by_name": "Milwaukee",
       "neighbor_vote": 6,
       "neighbor_count": 10,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Watertown",
+      "county": "Dodge"
     },
     {
       "zip": "90631",
@@ -169,7 +199,9 @@
       "surrounded_by_name": "West Los Angeles",
       "neighbor_vote": 6,
       "neighbor_count": 9,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "La Habra Heights",
+      "county": "Orange"
     },
     {
       "zip": "91387",
@@ -189,7 +221,9 @@
       "surrounded_by_name": "Sacramento",
       "neighbor_vote": 6,
       "neighbor_count": 7,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Walnut Grove",
+      "county": "Sacramento"
     },
     {
       "zip": "01507",
@@ -199,7 +233,9 @@
       "surrounded_by_name": "Greater Boston",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Charlton",
+      "county": "Worcester"
     },
     {
       "zip": "02780",
@@ -209,7 +245,9 @@
       "surrounded_by_name": "Rhode Island",
       "neighbor_vote": 5,
       "neighbor_count": 7,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Taunton",
+      "county": "Bristol"
     },
     {
       "zip": "08534",
@@ -219,7 +257,9 @@
       "surrounded_by_name": "Central & South Jersey",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Pennington",
+      "county": "Mercer"
     },
     {
       "zip": "10509",
@@ -229,7 +269,9 @@
       "surrounded_by_name": "Connecticut",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Brewster",
+      "county": "Putnam"
     },
     {
       "zip": "10541",
@@ -239,7 +281,9 @@
       "surrounded_by_name": "Connecticut",
       "neighbor_vote": 5,
       "neighbor_count": 7,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Mahopac",
+      "county": "Putnam"
     },
     {
       "zip": "11003",
@@ -249,7 +293,9 @@
       "surrounded_by_name": "Nassau County",
       "neighbor_vote": 5,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Alden Manor",
+      "county": "Nassau"
     },
     {
       "zip": "17555",
@@ -259,7 +305,9 @@
       "surrounded_by_name": "Southern Pennsylvania",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Narvon",
+      "county": "Lancaster"
     },
     {
       "zip": "20117",
@@ -269,7 +317,9 @@
       "surrounded_by_name": "Fairfax & Montgomery",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Zcta 20117",
+      "county": "Loudoun"
     },
     {
       "zip": "21206",
@@ -279,7 +329,9 @@
       "surrounded_by_name": "Baltimore",
       "neighbor_vote": 5,
       "neighbor_count": 7,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Baltimore",
+      "county": "Baltimore city"
     },
     {
       "zip": "21620",
@@ -289,7 +341,9 @@
       "surrounded_by_name": "Delmarva",
       "neighbor_vote": 5,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Chestertown",
+      "county": "Kent"
     },
     {
       "zip": "23847",
@@ -299,7 +353,9 @@
       "surrounded_by_name": "Eastern NC",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Emporia",
+      "county": "Greensville"
     },
     {
       "zip": "29148",
@@ -309,7 +365,9 @@
       "surrounded_by_name": "Columbia",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Summerton",
+      "county": "Clarendon"
     },
     {
       "zip": "29164",
@@ -319,7 +377,9 @@
       "surrounded_by_name": "Columbia",
       "neighbor_vote": 5,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Wagener",
+      "county": "Aiken"
     },
     {
       "zip": "29436",
@@ -329,7 +389,9 @@
       "surrounded_by_name": "Charleston",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Cross",
+      "county": "Berkeley"
     },
     {
       "zip": "30214",
@@ -339,7 +401,9 @@
       "surrounded_by_name": "Atlanta",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Woolsey",
+      "county": "Fayette"
     },
     {
       "zip": "32053",
@@ -349,7 +413,9 @@
       "surrounded_by_name": "South Georgia",
       "neighbor_vote": 5,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Jennings",
+      "county": "Hamilton"
     },
     {
       "zip": "37370",
@@ -359,7 +425,9 @@
       "surrounded_by_name": "Chattanooga",
       "neighbor_vote": 5,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Riceville",
+      "county": "McMinn"
     },
     {
       "zip": "37880",
@@ -369,7 +437,9 @@
       "surrounded_by_name": "Knoxville",
       "neighbor_vote": 5,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Ten Mile",
+      "county": "Meigs"
     },
     {
       "zip": "39601",
@@ -379,7 +449,9 @@
       "surrounded_by_name": "North Shore",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Brookhaven",
+      "county": "Lincoln"
     },
     {
       "zip": "48350",
@@ -389,7 +461,9 @@
       "surrounded_by_name": "Detroit",
       "neighbor_vote": 5,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Springfield",
+      "county": "Oakland"
     },
     {
       "zip": "49099",
@@ -399,7 +473,9 @@
       "surrounded_by_name": "South Bend",
       "neighbor_vote": 5,
       "neighbor_count": 7,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "White Pigeon",
+      "county": "St. Joseph"
     },
     {
       "zip": "55103",
@@ -409,7 +485,9 @@
       "surrounded_by_name": "St. Paul",
       "neighbor_vote": 5,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Saint Paul",
+      "county": "Ramsey"
     },
     {
       "zip": "55416",
@@ -419,7 +497,9 @@
       "surrounded_by_name": "St. Paul",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Saint Louis Park",
+      "county": "Hennepin"
     },
     {
       "zip": "61012",
@@ -429,7 +509,9 @@
       "surrounded_by_name": "Madison & Rockford",
       "neighbor_vote": 5,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Capron",
+      "county": "Boone"
     },
     {
       "zip": "77048",
@@ -439,7 +521,9 @@
       "surrounded_by_name": "North Houston",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Houston",
+      "county": "Harris"
     },
     {
       "zip": "77092",
@@ -449,7 +533,9 @@
       "surrounded_by_name": "Spring",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Houston",
+      "county": "Harris"
     },
     {
       "zip": "84105",
@@ -459,7 +545,9 @@
       "surrounded_by_name": "Salt Lake City",
       "neighbor_vote": 5,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Salt Lake City",
+      "county": "Salt Lake"
     },
     {
       "zip": "84109",
@@ -469,7 +557,9 @@
       "surrounded_by_name": "Salt Lake City",
       "neighbor_vote": 5,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Salt Lake City",
+      "county": "Salt Lake"
     },
     {
       "zip": "90278",
@@ -479,7 +569,9 @@
       "surrounded_by_name": "South Bay",
       "neighbor_vote": 5,
       "neighbor_count": 7,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Redondo Beach",
+      "county": "Los Angeles"
     },
     {
       "zip": "90302",
@@ -489,7 +581,9 @@
       "surrounded_by_name": "West Los Angeles",
       "neighbor_vote": 5,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Inglewood",
+      "county": "Los Angeles"
     },
     {
       "zip": "91789",
@@ -499,7 +593,9 @@
       "surrounded_by_name": "Inland Empire",
       "neighbor_vote": 5,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Diamond Bar",
+      "county": "Los Angeles"
     },
     {
       "zip": "92404",
@@ -509,7 +605,9 @@
       "surrounded_by_name": "Riverside County",
       "neighbor_vote": 5,
       "neighbor_count": 8,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "San Bernardino",
+      "county": "San Bernardino"
     },
     {
       "zip": "93001",
@@ -519,7 +617,9 @@
       "surrounded_by_name": "West Los Angeles",
       "neighbor_vote": 5,
       "neighbor_count": 7,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "San Buenaventura",
+      "county": "Ventura"
     },
     {
       "zip": "01054",
@@ -529,7 +629,9 @@
       "surrounded_by_name": "Greater Boston",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Leverett",
+      "county": "Franklin"
     },
     {
       "zip": "02341",
@@ -539,7 +641,9 @@
       "surrounded_by_name": "Greater Boston",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Hanson",
+      "county": "Plymouth"
     },
     {
       "zip": "11771",
@@ -549,7 +653,9 @@
       "surrounded_by_name": "Nassau County",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Oyster Bay",
+      "county": "Nassau"
     },
     {
       "zip": "12120",
@@ -559,7 +665,9 @@
       "surrounded_by_name": "Hudson Valley",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Medusa",
+      "county": "Albany"
     },
     {
       "zip": "21214",
@@ -569,7 +677,9 @@
       "surrounded_by_name": "Baltimore",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Baltimore",
+      "county": "Baltimore city"
     },
     {
       "zip": "21405",
@@ -579,7 +689,9 @@
       "surrounded_by_name": "Baltimore",
       "neighbor_vote": 4,
       "neighbor_count": 4,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Sherwood Forest",
+      "county": "Anne Arundel"
     },
     {
       "zip": "22735",
@@ -589,7 +701,9 @@
       "surrounded_by_name": "Shenandoah",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Reva",
+      "county": "Madison"
     },
     {
       "zip": "22923",
@@ -599,7 +713,9 @@
       "surrounded_by_name": "Shenandoah",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Burnleys",
+      "county": "Orange"
     },
     {
       "zip": "24479",
@@ -609,7 +725,9 @@
       "surrounded_by_name": "Roanoke",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Swoope",
+      "county": "Augusta"
     },
     {
       "zip": "29055",
@@ -619,7 +737,9 @@
       "surrounded_by_name": "Charlotte",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Great Falls",
+      "county": "Chester"
     },
     {
       "zip": "29058",
@@ -629,7 +749,9 @@
       "surrounded_by_name": "Columbia",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Heath Springs",
+      "county": "Lancaster"
     },
     {
       "zip": "30122",
@@ -639,7 +761,9 @@
       "surrounded_by_name": "Atlanta",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Zcta 30122",
+      "county": "Douglas"
     },
     {
       "zip": "30183",
@@ -649,7 +773,9 @@
       "surrounded_by_name": "Chattanooga",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Waleska",
+      "county": "Cherokee"
     },
     {
       "zip": "30230",
@@ -659,7 +785,9 @@
       "surrounded_by_name": "Middle Georgia",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Hogansville",
+      "county": "Troup"
     },
     {
       "zip": "31038",
@@ -669,7 +797,9 @@
       "surrounded_by_name": "Middle Georgia",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Round Oak",
+      "county": "Jasper"
     },
     {
       "zip": "32059",
@@ -679,7 +809,9 @@
       "surrounded_by_name": "Gainesville",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Lee",
+      "county": "Madison"
     },
     {
       "zip": "32145",
@@ -689,7 +821,9 @@
       "surrounded_by_name": "Volusia",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Hastings",
+      "county": "St. Johns"
     },
     {
       "zip": "32148",
@@ -699,7 +833,9 @@
       "surrounded_by_name": "Gainesville",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Interlachen",
+      "county": "Putnam"
     },
     {
       "zip": "32321",
@@ -709,7 +845,9 @@
       "surrounded_by_name": "Pensacola",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Bristol",
+      "county": "Liberty"
     },
     {
       "zip": "33440",
@@ -719,7 +857,9 @@
       "surrounded_by_name": "Southwest Florida",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Clewiston",
+      "county": "Hendry"
     },
     {
       "zip": "35541",
@@ -729,7 +869,9 @@
       "surrounded_by_name": "Birmingham",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Arley",
+      "county": "Winston"
     },
     {
       "zip": "35958",
@@ -739,7 +881,9 @@
       "surrounded_by_name": "Huntsville",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Bryant",
+      "county": "Jackson"
     },
     {
       "zip": "36529",
@@ -749,7 +893,9 @@
       "surrounded_by_name": "Pensacola",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Deer Park",
+      "county": "Washington"
     },
     {
       "zip": "36584",
@@ -759,7 +905,9 @@
       "surrounded_by_name": "North Shore",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Vinegar Bend",
+      "county": "Washington"
     },
     {
       "zip": "37826",
@@ -769,7 +917,9 @@
       "surrounded_by_name": "Chattanooga",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Niota",
+      "county": "McMinn"
     },
     {
       "zip": "37874",
@@ -779,7 +929,9 @@
       "surrounded_by_name": "Knoxville",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Sweetwater",
+      "county": "Monroe"
     },
     {
       "zip": "39119",
@@ -789,7 +941,9 @@
       "surrounded_by_name": "North Shore",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Mount Olive",
+      "county": "Covington"
     },
     {
       "zip": "39629",
@@ -799,7 +953,9 @@
       "surrounded_by_name": "North Shore",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Bogue Chitto",
+      "county": "Lincoln"
     },
     {
       "zip": "39668",
@@ -809,7 +965,9 @@
       "surrounded_by_name": "Jackson",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Union Church",
+      "county": "Jefferson"
     },
     {
       "zip": "40068",
@@ -819,7 +977,9 @@
       "surrounded_by_name": "Greater Louisville",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Smithfield",
+      "county": "Henry"
     },
     {
       "zip": "44286",
@@ -829,7 +989,9 @@
       "surrounded_by_name": "Cleveland",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Richfield",
+      "county": "Summit"
     },
     {
       "zip": "44807",
@@ -839,7 +1001,9 @@
       "surrounded_by_name": "Columbus",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Carrothers",
+      "county": "Seneca"
     },
     {
       "zip": "46721",
@@ -849,7 +1013,9 @@
       "surrounded_by_name": "Greater Toledo",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Butler",
+      "county": "De Kalb"
     },
     {
       "zip": "49224",
@@ -859,7 +1025,9 @@
       "surrounded_by_name": "Lansing",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Albion",
+      "county": "Calhoun"
     },
     {
       "zip": "61038",
@@ -869,7 +1037,9 @@
       "surrounded_by_name": "Chicagoland",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Garden Prairie",
+      "county": "Boone"
     },
     {
       "zip": "77336",
@@ -879,7 +1049,9 @@
       "surrounded_by_name": "North Houston",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Huffman",
+      "county": "Harris"
     },
     {
       "zip": "90270",
@@ -889,7 +1061,9 @@
       "surrounded_by_name": "West Los Angeles",
       "neighbor_vote": 4,
       "neighbor_count": 4,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Maywood",
+      "county": "Los Angeles"
     },
     {
       "zip": "91759",
@@ -899,7 +1073,9 @@
       "surrounded_by_name": "Inland Empire",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Mt Baldy",
+      "county": "Los Angeles"
     },
     {
       "zip": "92374",
@@ -909,7 +1085,9 @@
       "surrounded_by_name": "Riverside County",
       "neighbor_vote": 4,
       "neighbor_count": 6,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Redlands",
+      "county": "San Bernardino"
     },
     {
       "zip": "92845",
@@ -919,7 +1097,9 @@
       "surrounded_by_name": "South Bay",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Zcta 92845",
+      "county": "Orange"
     },
     {
       "zip": "94501",
@@ -929,7 +1109,9 @@
       "surrounded_by_name": "East Bay",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Coast Guard Isla",
+      "county": "Alameda"
     },
     {
       "zip": "95140",
@@ -939,7 +1121,9 @@
       "surrounded_by_name": "San Jose",
       "neighbor_vote": 4,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Mount Hamilton",
+      "county": "Santa Clara"
     },
     {
       "zip": "01570",
@@ -949,7 +1133,9 @@
       "surrounded_by_name": "Hartford",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Dudley Hill",
+      "county": "Worcester"
     },
     {
       "zip": "06443",
@@ -959,7 +1145,9 @@
       "surrounded_by_name": "Hartford",
       "neighbor_vote": 3,
       "neighbor_count": 4,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Madison",
+      "county": "New Haven"
     },
     {
       "zip": "06450",
@@ -969,7 +1157,9 @@
       "surrounded_by_name": "Hartford",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Meriden",
+      "county": "New Haven"
     },
     {
       "zip": "08065",
@@ -979,7 +1169,9 @@
       "surrounded_by_name": "Philadelphia",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Palmyra",
+      "county": "Burlington"
     },
     {
       "zip": "10519",
@@ -989,7 +1181,9 @@
       "surrounded_by_name": "Connecticut",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Croton Falls",
+      "county": "Westchester"
     },
     {
       "zip": "12195",
@@ -1009,7 +1203,9 @@
       "surrounded_by_name": "Albany",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Preston Hollow",
+      "county": "Albany"
     },
     {
       "zip": "19545",
@@ -1019,7 +1215,9 @@
       "surrounded_by_name": "Philadelphia",
       "neighbor_vote": 3,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "New Berlinville",
+      "county": "Berks"
     },
     {
       "zip": "20135",
@@ -1029,7 +1227,9 @@
       "surrounded_by_name": "Shenandoah",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Zcta 20135",
+      "county": "Clarke"
     },
     {
       "zip": "20763",
@@ -1039,7 +1239,9 @@
       "surrounded_by_name": "Southern Maryland",
       "neighbor_vote": 3,
       "neighbor_count": 4,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Savage",
+      "county": "Howard"
     },
     {
       "zip": "21037",
@@ -1049,7 +1251,9 @@
       "surrounded_by_name": "Southern Maryland",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Edgewater Beach",
+      "county": "Anne Arundel"
     },
     {
       "zip": "21045",
@@ -1059,7 +1263,9 @@
       "surrounded_by_name": "Baltimore",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Columbia",
+      "county": "Howard"
     },
     {
       "zip": "21056",
@@ -1069,7 +1275,9 @@
       "surrounded_by_name": "Baltimore",
       "neighbor_vote": 3,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Gibson Island",
+      "county": "Anne Arundel"
     },
     {
       "zip": "21113",
@@ -1079,7 +1287,9 @@
       "surrounded_by_name": "Baltimore",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Odenton",
+      "county": "Anne Arundel"
     },
     {
       "zip": "21162",
@@ -1089,7 +1299,9 @@
       "surrounded_by_name": "Baltimore",
       "neighbor_vote": 3,
       "neighbor_count": 4,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "White Marsh",
+      "county": "Baltimore"
     },
     {
       "zip": "21738",
@@ -1099,7 +1311,9 @@
       "surrounded_by_name": "Baltimore",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Glenwood",
+      "county": "Howard"
     },
     {
       "zip": "22716",
@@ -1109,7 +1323,9 @@
       "surrounded_by_name": "Northern Virginia",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Castleton",
+      "county": "Rappahannock"
     },
     {
       "zip": "22948",
@@ -1119,7 +1335,9 @@
       "surrounded_by_name": "Northern Virginia",
       "neighbor_vote": 3,
       "neighbor_count": 4,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Locust Dale",
+      "county": "Madison"
     },
     {
       "zip": "24485",
@@ -1129,7 +1347,9 @@
       "surrounded_by_name": "Shenandoah",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "West Augusta",
+      "county": "Augusta"
     },
     {
       "zip": "27356",
@@ -1139,7 +1359,9 @@
       "surrounded_by_name": "Greensboro",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Star",
+      "county": "Montgomery"
     },
     {
       "zip": "27557",
@@ -1149,7 +1371,9 @@
       "surrounded_by_name": "Eastern NC",
       "neighbor_vote": 3,
       "neighbor_count": 4,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Middlesex",
+      "county": "Nash"
     },
     {
       "zip": "27853",
@@ -1159,7 +1383,9 @@
       "surrounded_by_name": "Norfolk",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Margarettsville",
+      "county": "Northampton"
     },
     {
       "zip": "28478",
@@ -1169,7 +1395,9 @@
       "surrounded_by_name": "Fayetteville",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Willard",
+      "county": "Pender"
     },
     {
       "zip": "29009",
@@ -1179,7 +1407,9 @@
       "surrounded_by_name": "Charlotte",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Bethune",
+      "county": "Kershaw"
     },
     {
       "zip": "29031",
@@ -1189,7 +1419,9 @@
       "surrounded_by_name": "Columbia",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Carlisle",
+      "county": "Union"
     },
     {
       "zip": "29168",
@@ -1199,7 +1431,9 @@
       "surrounded_by_name": "Columbia",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Wedgefield",
+      "county": "Sumter"
     },
     {
       "zip": "29332",
@@ -1209,7 +1443,9 @@
       "surrounded_by_name": "Greenville",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Cross Hill",
+      "county": "Laurens"
     },
     {
       "zip": "29432",
@@ -1219,7 +1455,9 @@
       "surrounded_by_name": "Charleston",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Branchville",
+      "county": "Orangeburg"
     },
     {
       "zip": "31085",
@@ -1229,7 +1467,9 @@
       "surrounded_by_name": "Athens",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Shady Dale",
+      "county": "Jasper"
     },
     {
       "zip": "32102",
@@ -1239,7 +1479,9 @@
       "surrounded_by_name": "Lake County",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Astor",
+      "county": "Lake"
     },
     {
       "zip": "32776",
@@ -1249,7 +1491,9 @@
       "surrounded_by_name": "Oviedo",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Sorrento",
+      "county": "Lake"
     },
     {
       "zip": "33548",
@@ -1269,7 +1513,9 @@
       "surrounded_by_name": "Winter Haven",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Plant City",
+      "county": "Hillsborough"
     },
     {
       "zip": "33570",
@@ -1279,7 +1525,9 @@
       "surrounded_by_name": "Sarasota",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Ruskin",
+      "county": "Hillsborough"
     },
     {
       "zip": "34445",
@@ -1299,7 +1547,9 @@
       "surrounded_by_name": "Huntsville",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Cullman",
+      "county": "Cullman"
     },
     {
       "zip": "36513",
@@ -1309,7 +1559,9 @@
       "surrounded_by_name": "Pensacola",
       "neighbor_vote": 3,
       "neighbor_count": 4,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Calvert",
+      "county": "Washington"
     },
     {
       "zip": "37354",
@@ -1319,7 +1571,9 @@
       "surrounded_by_name": "Chattanooga",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Hiwassee College",
+      "county": "Monroe"
     },
     {
       "zip": "37381",
@@ -1329,7 +1583,9 @@
       "surrounded_by_name": "Chattanooga",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Spring City",
+      "county": "Rhea"
     },
     {
       "zip": "37846",
@@ -1339,7 +1595,9 @@
       "surrounded_by_name": "Knoxville",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Philadelphia",
+      "county": "Loudon"
     },
     {
       "zip": "39191",
@@ -1349,7 +1607,9 @@
       "surrounded_by_name": "North Shore",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Wesson",
+      "county": "Copiah"
     },
     {
       "zip": "39662",
@@ -1359,7 +1619,9 @@
       "surrounded_by_name": "North Shore",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Ruth",
+      "county": "Lincoln"
     },
     {
       "zip": "40142",
@@ -1369,7 +1631,9 @@
       "surrounded_by_name": "Greater Louisville",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Guston",
+      "county": "Meade"
     },
     {
       "zip": "41010",
@@ -1379,7 +1643,9 @@
       "surrounded_by_name": "Greater Lexington",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Corinth",
+      "county": "Grant"
     },
     {
       "zip": "43153",
@@ -1389,7 +1655,9 @@
       "surrounded_by_name": "Columbus",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "South Solon",
+      "county": "Madison"
     },
     {
       "zip": "44230",
@@ -1399,7 +1667,9 @@
       "surrounded_by_name": "Akron",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Doylestown",
+      "county": "Wayne"
     },
     {
       "zip": "46390",
@@ -1409,7 +1679,9 @@
       "surrounded_by_name": "South Bend",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Wanatah",
+      "county": "La Porte"
     },
     {
       "zip": "46737",
@@ -1419,7 +1691,9 @@
       "surrounded_by_name": "SW Michigan",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Fremont",
+      "county": "Steuben"
     },
     {
       "zip": "48890",
@@ -1429,7 +1703,9 @@
       "surrounded_by_name": "Lansing",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Sunfield",
+      "county": "Eaton"
     },
     {
       "zip": "49076",
@@ -1439,7 +1715,9 @@
       "surrounded_by_name": "SW Michigan",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Olivet",
+      "county": "Eaton"
     },
     {
       "zip": "49085",
@@ -1449,7 +1727,9 @@
       "surrounded_by_name": "South Bend",
       "neighbor_vote": 3,
       "neighbor_count": 4,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Saint Joseph",
+      "county": "Berrien"
     },
     {
       "zip": "53932",
@@ -1459,7 +1739,9 @@
       "surrounded_by_name": "Madison & Rockford",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Fall River",
+      "county": "Columbia"
     },
     {
       "zip": "55315",
@@ -1469,7 +1751,9 @@
       "surrounded_by_name": "St. Paul",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Carver",
+      "county": "Carver"
     },
     {
       "zip": "55317",
@@ -1479,7 +1763,9 @@
       "surrounded_by_name": "St. Paul",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Chanhassen",
+      "county": "Carver"
     },
     {
       "zip": "55412",
@@ -1489,7 +1775,9 @@
       "surrounded_by_name": "Minneapolis",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Minneapolis",
+      "county": "Hennepin"
     },
     {
       "zip": "64784",
@@ -1499,7 +1787,9 @@
       "surrounded_by_name": "Springfield",
       "neighbor_vote": 3,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Sheldon",
+      "county": "Vernon"
     },
     {
       "zip": "74960",
@@ -1509,7 +1799,9 @@
       "surrounded_by_name": "Arkansas",
       "neighbor_vote": 3,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Stilwell",
+      "county": "Adair"
     },
     {
       "zip": "75147",
@@ -1519,7 +1811,9 @@
       "surrounded_by_name": "East Texas",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Gun Barrel City",
+      "county": "Henderson"
     },
     {
       "zip": "77006",
@@ -1529,7 +1823,9 @@
       "surrounded_by_name": "SW Houston",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Houston",
+      "county": "Harris"
     },
     {
       "zip": "80514",
@@ -1539,7 +1835,9 @@
       "surrounded_by_name": "Denver",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Dacono",
+      "county": "Weld"
     },
     {
       "zip": "90303",
@@ -1549,7 +1847,9 @@
       "surrounded_by_name": "West Los Angeles",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Inglewood",
+      "county": "Los Angeles"
     },
     {
       "zip": "90304",
@@ -1559,7 +1859,9 @@
       "surrounded_by_name": "West Los Angeles",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Lennox",
+      "county": "Los Angeles"
     },
     {
       "zip": "92823",
@@ -1569,7 +1871,9 @@
       "surrounded_by_name": "Orange County CA",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Anaheim",
+      "county": "Orange"
     },
     {
       "zip": "93023",
@@ -1579,7 +1883,9 @@
       "surrounded_by_name": "Ventura",
       "neighbor_vote": 3,
       "neighbor_count": 5,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Ojai",
+      "county": "Ventura"
     },
     {
       "zip": "95391",
@@ -1599,7 +1905,9 @@
       "surrounded_by_name": "Greater Boston",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Plainfield",
+      "county": "Hampshire"
     },
     {
       "zip": "01092",
@@ -1609,7 +1917,9 @@
       "surrounded_by_name": "Hartford",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "West Warren",
+      "county": "Worcester"
     },
     {
       "zip": "06065",
@@ -1619,7 +1929,9 @@
       "surrounded_by_name": "Connecticut",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Riverton",
+      "county": "Litchfield"
     },
     {
       "zip": "06444",
@@ -1639,7 +1951,9 @@
       "surrounded_by_name": "Philadelphia",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "National Park",
+      "county": "Gloucester"
     },
     {
       "zip": "08553",
@@ -1649,7 +1963,9 @@
       "surrounded_by_name": "Central & South Jersey",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Rocky Hill",
+      "county": "Somerset"
     },
     {
       "zip": "08890",
@@ -1669,7 +1985,9 @@
       "surrounded_by_name": "Philadelphia",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Geigertown",
+      "county": "Berks"
     },
     {
       "zip": "21114",
@@ -1679,7 +1997,9 @@
       "surrounded_by_name": "Southern Maryland",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Crofton",
+      "county": "Anne Arundel"
     },
     {
       "zip": "21140",
@@ -1689,7 +2009,9 @@
       "surrounded_by_name": "Baltimore",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Riva",
+      "county": "Anne Arundel"
     },
     {
       "zip": "22534",
@@ -1699,7 +2021,9 @@
       "surrounded_by_name": "Richmond",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Partlow",
+      "county": "Spotsylvania"
     },
     {
       "zip": "23168",
@@ -1709,7 +2033,9 @@
       "surrounded_by_name": "Richmond",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Toano",
+      "county": "James City"
     },
     {
       "zip": "29364",
@@ -1719,7 +2045,9 @@
       "surrounded_by_name": "Charlotte",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Lockhart",
+      "county": "Union"
     },
     {
       "zip": "31096",
@@ -1729,7 +2057,9 @@
       "surrounded_by_name": "Augusta",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Wrightsville",
+      "county": "Johnson"
     },
     {
       "zip": "32664",
@@ -1739,7 +2069,9 @@
       "surrounded_by_name": "Gainesville",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Mc Intosh",
+      "county": "Marion"
     },
     {
       "zip": "33948",
@@ -1749,7 +2081,9 @@
       "surrounded_by_name": "Sarasota",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Port Charlotte",
+      "county": "Charlotte"
     },
     {
       "zip": "35740",
@@ -1759,7 +2093,9 @@
       "surrounded_by_name": "Chattanooga",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Bridgeport",
+      "county": "Jackson"
     },
     {
       "zip": "35979",
@@ -1769,7 +2105,9 @@
       "surrounded_by_name": "Chattanooga",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Higdon",
+      "county": "DeKalb"
     },
     {
       "zip": "36556",
@@ -1779,7 +2117,9 @@
       "surrounded_by_name": "North Shore",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Malcolm",
+      "county": "Washington"
     },
     {
       "zip": "39359",
@@ -1789,7 +2129,9 @@
       "surrounded_by_name": "North Shore",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Sebastopol",
+      "county": "Scott"
     },
     {
       "zip": "39665",
@@ -1799,7 +2141,9 @@
       "surrounded_by_name": "Jackson",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Sontag",
+      "county": "Lawrence"
     },
     {
       "zip": "40150",
@@ -1809,7 +2153,9 @@
       "surrounded_by_name": "Greater Lexington",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Lebanon Junction",
+      "county": "Bullitt"
     },
     {
       "zip": "48421",
@@ -1819,7 +2165,9 @@
       "surrounded_by_name": "Great Lakes Bay Region",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Columbiaville",
+      "county": "Lapeer"
     },
     {
       "zip": "48464",
@@ -1829,7 +2177,9 @@
       "surrounded_by_name": "Great Lakes Bay Region",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Otter Lake",
+      "county": "Lapeer"
     },
     {
       "zip": "55043",
@@ -1839,7 +2189,9 @@
       "surrounded_by_name": "Minneapolis",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Lakeland",
+      "county": "Washington"
     },
     {
       "zip": "61051",
@@ -1849,7 +2201,9 @@
       "surrounded_by_name": "Central Iowa",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Milledgeville",
+      "county": "Carroll"
     },
     {
       "zip": "72821",
@@ -1859,7 +2213,9 @@
       "surrounded_by_name": "Little Rock",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Altus",
+      "county": "Franklin"
     },
     {
       "zip": "95616",
@@ -1869,7 +2225,9 @@
       "surrounded_by_name": "East Bay",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Davis",
+      "county": "Yolo"
     },
     {
       "zip": "98029",
@@ -1879,7 +2237,9 @@
       "surrounded_by_name": "Greater Seattle",
       "neighbor_vote": 2,
       "neighbor_count": 3,
-      "orphan_type": "adjacency"
+      "orphan_type": "adjacency",
+      "city": "Zcta 98029",
+      "county": "King"
     },
     {
       "zip": "27207",
