@@ -1,0 +1,11 @@
+# Netlify configuration — static site, no build step (vanilla HTML/JS)
+# When the repo is connected to Netlify, it will just publish the root directory as-is.
+
+[build]
+  publish = "."
+
+# Cache GeoJSON data aggressively once we add it in Step 2
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
