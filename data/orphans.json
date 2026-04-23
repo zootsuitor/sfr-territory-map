@@ -7,8 +7,8 @@
     "no_neighbor": 1522,
     "adjacency_orphans": 187,
     "purchased_unmapped": 22,
-    "unassigned": 13,
-    "orphans": 222
+    "unassigned": 16,
+    "orphans": 225
   },
   "orphans": [
     {
@@ -2660,6 +2660,42 @@
       "orphan_type": "unassigned",
       "city": "Lilesville",
       "county": "Anson"
+    },
+    {
+      "zip": "28163",
+      "current_franchise_id": null,
+      "current_franchise_name": null,
+      "surrounded_by_id": null,
+      "surrounded_by_name": "Unassigned \u2014 Stanly Co., NC",
+      "neighbor_vote": null,
+      "neighbor_count": null,
+      "orphan_type": "unassigned",
+      "city": "Stanfield",
+      "county": "Stanly"
+    },
+    {
+      "zip": "28128",
+      "current_franchise_id": null,
+      "current_franchise_name": null,
+      "surrounded_by_id": null,
+      "surrounded_by_name": "Unassigned \u2014 Stanly Co., NC",
+      "neighbor_vote": null,
+      "neighbor_count": null,
+      "orphan_type": "unassigned",
+      "city": "Norwood",
+      "county": "Stanly"
+    },
+    {
+      "zip": "28129",
+      "current_franchise_id": null,
+      "current_franchise_name": null,
+      "surrounded_by_id": null,
+      "surrounded_by_name": "Unassigned \u2014 Stanly Co., NC",
+      "neighbor_vote": null,
+      "neighbor_count": null,
+      "orphan_type": "unassigned",
+      "city": "Oakboro",
+      "county": "Stanly"
     }
   ]
 }
