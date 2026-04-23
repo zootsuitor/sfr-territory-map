@@ -32,6 +32,14 @@ const ORPHAN_FILL_OPACITY = 0.55;
 const ORPHAN_STROKE_COLOR = '#7a0000';
 const ORPHAN_STROKE_WEIGHT = 1.5;
 const ORPHAN_STROKE_OPACITY = 0.95;
+// No-ZCTA terrain — holes inside franchise territory where USPS never assigned a ZIP.
+// Rendered in neutral grey on top of franchise polygons but below the red orphan layer.
+const NO_ZCTA_FILL_COLOR = '#9ca3af';
+const NO_ZCTA_FILL_OPACITY = 0.55;
+const NO_ZCTA_STROKE_COLOR = '#4b5563';
+const NO_ZCTA_STROKE_WEIGHT = 1;
+const NO_ZCTA_STROKE_OPACITY = 0.6;
+
 // County boundaries inside Raleigh + Triad territories.
 // Color = darker shade of each franchise's territory fill.
 const COUNTY_BORDER_COLORS = {
@@ -75,6 +83,7 @@ const state = {
   hoverTooltip: null,      // L.tooltip instance used for the current hover
   zipToCounty: {},         // "27330" -> {city, county, state} — loaded async from GitHub crosswalk
   countyBordersLayer: null,// L.geoJSON layer of NC county polygon outlines in Raleigh+Triad
+  noZipLayer: null,        // L.geoJSON layer of grey no-ZCTA terrain (parks, refuges, etc.)
 };
 
 // Converts "BEAR CREEK" or "bear creek" -> "Bear Creek"
@@ -145,13 +154,14 @@ async function loadJSON(path, label, pctStart, pctEnd) {
     // Kick off the county crosswalk in parallel — don't block the map on it.
     const countyPromise = loadCountyCrosswalk();
 
-    const [franchisesDoc, centroidsDoc, orphansDoc, zctaDoc, orphanPolysDoc, countiesDoc] = await Promise.all([
+    const [franchisesDoc, centroidsDoc, orphansDoc, zctaDoc, orphanPolysDoc, countyBordersDoc, noZipDoc] = await Promise.all([
       loadJSON('data/franchises.json', 'franchises', 5, 10),
       loadJSON('data/zip_centroids.json', 'ZIP centroids', 10, 20),
       loadJSON('data/orphans.json', 'orphans', 20, 25),
       loadJSON('data/zcta_polygons.json', 'ZIP polygons', 25, 78),
-      loadJSON('data/orphan_polygons.json', 'orphan overlay', 78, 85),
-      loadJSON('data/nc_counties.json', 'NC counties', 85, 88).catch(() => null),
+      loadJSON('data/orphan_polygons.json', 'orphan overlay', 78, 83),
+      loadJSON('data/nc_county_borders.json', 'NC county borders', 83, 86).catch(() => null),
+      loadJSON('data/no_zip_terrain.json', 'no-ZCTA terrain', 86, 89).catch(() => null),
     ]);
 
     // Stash the crosswalk once it arrives (usually by now); tooltips look it up live.
@@ -168,10 +178,15 @@ async function loadJSON(path, label, pctStart, pctEnd) {
     state.orphanPolygonsFC = orphanPolysDoc;
     state.myFranchiseIds = new Set(franchisesDoc.my_franchises);
 
-    setLoad(88, 'Building layers…');
+    setLoad(90, 'Building layers…');
     await new Promise(r => setTimeout(r, 20)); // let UI breathe
     buildLayers();
-    if (countiesDoc) buildCountyBorders(countiesDoc);
+    if (noZipDoc) buildNoZipTerrain(noZipDoc);        // grey — sits above franchise fills
+    if (countyBordersDoc) buildCountyBorders(countyBordersDoc);
+    // Ensure z-order: red orphans must sit above grey terrain and county lines
+    if (state.orphanLayer && typeof state.orphanLayer.bringToFront === 'function') {
+      try { state.orphanLayer.bringToFront(); } catch (e) {}
+    }
 
     setLoad(95, 'Building control panel…');
     await new Promise(r => setTimeout(r, 20));
@@ -427,6 +442,43 @@ function buildCountyBorders(fc) {
   layer.addTo(map);
   const n = (fc.features || []).length;
   console.log(`[sfr-territory-map] rendered ${n} NC county outlines`);
+}
+
+// ----- No-ZCTA terrain — grey polygons filling holes in franchise coverage -----
+// These are areas surrounded by franchise territory where USPS never assigned a ZIP.
+// Typically: state parks, national forests, wildlife refuges, military reservations,
+// swamps, or large water bodies. The layer sits above franchise fills (so the holes
+// look filled) but below the red orphan overlay (so unassigned-ZIP reds still pop).
+function buildNoZipTerrain(fc) {
+  const layer = L.geoJSON(fc, {
+    style: () => ({
+      color: NO_ZCTA_STROKE_COLOR,
+      weight: NO_ZCTA_STROKE_WEIGHT,
+      opacity: NO_ZCTA_STROKE_OPACITY,
+      fillColor: NO_ZCTA_FILL_COLOR,
+      fillOpacity: NO_ZCTA_FILL_OPACITY,
+      dashArray: '3,3',   // subtle hatching so it's visually distinct from territory fills
+    }),
+    onEachFeature: (feat, lyr) => {
+      const p = feat.properties || {};
+      lyr.bindTooltip(
+        `<div class="zip-tip"><b style="color:#374151">no assigned zip</b>` +
+        (p.state ? `<div class="zip-tip-loc">${escapeHtml(p.state)} — no ZCTA in this area</div>` : '') +
+        `</div>`,
+        { sticky: true, direction: 'top', offset: [0, -6], opacity: 0.95, className: 'zip-hover-tip' }
+      );
+      lyr.bindPopup(
+        `<b style="color:#374151">No assigned ZIP</b><br>` +
+        `This area has no USPS-designated ZIP code.<br>` +
+        `Typically a park, refuge, military reservation, swamp, or water body.<br>` +
+        (p.state ? `<span style="color:#94a3b8">${escapeHtml(p.state)}${p.area_sqdeg ? ` — ~${Math.round(p.area_sqdeg * 10000)} km²` : ''}</span>` : '')
+      );
+    },
+  });
+  state.noZipLayer = layer;
+  layer.addTo(map);
+  const n = (fc.features || []).length;
+  console.log(`[sfr-territory-map] rendered ${n} no-ZCTA terrain polygons`);
 }
 
 // ----- Build the right-side control panel -----
