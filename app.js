@@ -234,15 +234,23 @@ function buildLayers() {
       const p = feat.properties || {};
       const z = p.zip;
       const where = p.city ? `<b>${escapeHtml(p.city)}</b>${p.county ? ` — ${escapeHtml(p.county)} Co., NC` : ''}` : '';
-      let body;
-      const typeLabel = p.orphan_type === 'purchased_unmapped' ? 'RALEIGH GAP' : 'ORPHAN';
+      let body, typeLabel;
       if (p.orphan_type === 'purchased_unmapped') {
+        typeLabel = 'RALEIGH GAP';
         body =
           `<b style="color:${ORPHAN_FILL_COLOR}">RALEIGH GAP — ZIP ${z}</b><br>` +
           (where ? `${where}<br>` : '') +
           `In Raleigh's purchased territory but <b>not yet mapped</b> in Fence360.<br>` +
           `<em>Action: add to Raleigh's mapped territory.</em>`;
+      } else if (p.orphan_type === 'unassigned') {
+        typeLabel = 'UNASSIGNED';
+        body =
+          `<b style="color:${ORPHAN_FILL_COLOR}">UNASSIGNED — ZIP ${z}</b><br>` +
+          (where ? `${where}<br>` : '') +
+          `Not assigned to any SFR franchise.<br>` +
+          `<em>${escapeHtml(p.surrounded_by_name || 'Open territory.')}</em>`;
       } else {
+        typeLabel = 'ORPHAN';
         const cur = p.current_franchise_name || '<em>unassigned</em>';
         const vote = (p.neighbor_vote != null && p.neighbor_count != null)
           ? ` (${p.neighbor_vote}/${p.neighbor_count} adjacent polygons)` : '';
