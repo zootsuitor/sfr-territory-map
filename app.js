@@ -32,6 +32,15 @@ const ORPHAN_FILL_OPACITY = 0.55;
 const ORPHAN_STROKE_COLOR = '#7a0000';
 const ORPHAN_STROKE_WEIGHT = 1.5;
 const ORPHAN_STROKE_OPACITY = 0.95;
+// County boundaries inside Raleigh + Triad territories.
+// Color = darker shade of each franchise's territory fill.
+const COUNTY_BORDER_COLORS = {
+  Raleigh: '#0D47A1',  // darker than Raleigh's #1565C0 fill
+  Triad:   '#1B5E20',  // darker than Triad's #43A047 fill
+  cross:   '#4A148C',  // purple for boundary between the two franchises
+};
+const COUNTY_BORDER_WEIGHT = 2;
+const COUNTY_BORDER_HOVER_WEIGHT = 4;
 const INITIAL_CENTER = [37.5, -96]; // continental US center
 const INITIAL_ZOOM = 4;
 
@@ -66,6 +75,7 @@ const state = {
   orphansOnly: false,
   hoverTooltip: null,      // L.tooltip instance used for the current hover
   zipToCounty: {},         // "27330" -> {city, county, state} — loaded async from GitHub crosswalk
+  countyBordersLayer: null,// L.geoJSON layer of county-to-county boundary lines in Raleigh+Triad
 };
 
 // Converts "BEAR CREEK" or "bear creek" -> "Bear Creek"
@@ -136,12 +146,13 @@ async function loadJSON(path, label, pctStart, pctEnd) {
     // Kick off the county crosswalk in parallel — don't block the map on it.
     const countyPromise = loadCountyCrosswalk();
 
-    const [franchisesDoc, centroidsDoc, orphansDoc, zctaDoc, orphanPolysDoc] = await Promise.all([
+    const [franchisesDoc, centroidsDoc, orphansDoc, zctaDoc, orphanPolysDoc, countyBordersDoc] = await Promise.all([
       loadJSON('data/franchises.json', 'franchises', 5, 10),
       loadJSON('data/zip_centroids.json', 'ZIP centroids', 10, 20),
       loadJSON('data/orphans.json', 'orphans', 20, 25),
       loadJSON('data/zcta_polygons.json', 'ZIP polygons', 25, 78),
       loadJSON('data/orphan_polygons.json', 'orphan overlay', 78, 85),
+      loadJSON('data/nc_county_borders.json', 'NC county borders', 85, 88).catch(() => null),
     ]);
 
     // Stash the crosswalk once it arrives (usually by now); tooltips look it up live.
@@ -161,6 +172,7 @@ async function loadJSON(path, label, pctStart, pctEnd) {
     setLoad(88, 'Building layers…');
     await new Promise(r => setTimeout(r, 20)); // let UI breathe
     buildLayers();
+    if (countyBordersDoc) buildCountyBorders(countyBordersDoc);
 
     setLoad(95, 'Building control panel…');
     await new Promise(r => setTimeout(r, 20));
@@ -351,6 +363,50 @@ function buildLayers() {
   const adj = (state.orphanPolygonsFC.features || []).filter(f => f.properties.orphan_type === 'adjacency').length;
   const gap = (state.orphanPolygonsFC.features || []).filter(f => f.properties.orphan_type === 'purchased_unmapped').length;
   console.log(`[sfr-territory-map] rendered ${adj + gap} orphan polygons (${adj} adjacency + ${gap} Raleigh gaps)`);
+}
+
+// ----- County borders inside Raleigh + Triad territories -----
+// Renders each shared-boundary line segment (e.g. "Wake / Durham border") in a
+// darker shade of the host franchise's fill color. Hover reveals the label.
+function buildCountyBorders(fc) {
+  const layer = L.geoJSON(fc, {
+    style: (feat) => {
+      const t = feat.properties.boundary_type || 'cross';
+      return {
+        color: COUNTY_BORDER_COLORS[t] || '#333',
+        weight: COUNTY_BORDER_WEIGHT,
+        opacity: 0.85,
+        fillOpacity: 0,
+        lineJoin: 'round',
+        lineCap: 'round',
+      };
+    },
+    onEachFeature: (feat, lyr) => {
+      const p = feat.properties || {};
+      const label = p.label || `${p.county_a} / ${p.county_b} border`;
+      lyr.on('mouseover', (e) => {
+        const t = e.target;
+        const base = COUNTY_BORDER_COLORS[p.boundary_type] || '#333';
+        t.setStyle({ color: base, weight: COUNTY_BORDER_HOVER_WEIGHT, opacity: 1 });
+        t.bringToFront();
+        t.bindTooltip(
+          `<div class="zip-tip"><b>${escapeHtml(label)}</b>` +
+          `<div class="zip-tip-loc" style="color:${base}">` +
+            `${escapeHtml(p.franchise_a)}${p.franchise_a !== p.franchise_b ? ' ↔ ' + escapeHtml(p.franchise_b) : ''} territory` +
+          `</div></div>`,
+          { sticky: true, direction: 'top', offset: [0, -6], opacity: 0.95, className: 'zip-hover-tip' }
+        ).openTooltip(e.latlng);
+      });
+      lyr.on('mouseout', (e) => {
+        e.target.setStyle({ weight: COUNTY_BORDER_WEIGHT, opacity: 0.85 });
+        e.target.closeTooltip();
+      });
+    },
+  });
+  state.countyBordersLayer = layer;
+  layer.addTo(map);
+  const n = (fc.features || []).length;
+  console.log(`[sfr-territory-map] rendered ${n} NC county border segments`);
 }
 
 // ----- Build the right-side control panel -----
