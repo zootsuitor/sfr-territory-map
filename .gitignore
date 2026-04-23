@@ -9,3 +9,7 @@ dist/
 
 # Raw downloaded shapefiles — too big for git, regenerated on demand
 /build/raw_zcta/
+
+# 33 MB intermediate — per-ZIP polygons. Dissolved output
+# (data/franchise_polygons.json, 8 MB) is what the app actually loads.
+data/sfr-zcta-polygons.json

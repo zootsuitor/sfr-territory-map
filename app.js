@@ -1,23 +1,26 @@
 /**
- * SFR Territory Map — Milestone 1 Step 2
+ * SFR Territory Map — Milestone 1 Step 3
  *
- * Loads franchises + ZIP centroids + orphans, renders all 20K ZIPs on a Leaflet
- * canvas, provides a control panel to toggle franchises, and highlights orphan
- * ZIPs (surrounded by contiguous territory they're not in) in bright red.
+ * Renders TRUE franchise polygon boundaries (dissolved ZCTA outlines) instead
+ * of centroid dots. Loads franchises + centroids + orphans + dissolved polygons,
+ * builds one L.geoJSON layer per franchise, and highlights orphan ZIPs
+ * (surrounded by contiguous territory they're not in) in bright red.
  *
  * Data files (data/):
- *   - franchises.json       — 139 franchises w/ colors + their ZIP lists
- *   - zip_centroids.json    — { "27231": [lat, lon], ... } for the 20,019 assigned ZIPs
- *   - orphans.json          — pre-computed KNN-based orphan list
+ *   - franchises.json             — 139 franchises w/ colors + their ZIP lists
+ *   - zip_centroids.json          — { "27231": [lat, lon], ... } (20,019 entries)
+ *   - franchise_polygons.json     — FeatureCollection of 122 dissolved franchise outlines
+ *   - orphans.json                — polygon-adjacency orphan list (187 orphans)
  *
- * Polygon boundaries (dissolved franchise outlines + per-ZIP polygons) come in
- * Step 3 when we have ZCTA polygon data. For now we use centroid circles — same
- * territorial information, much lighter.
+ * Centroids are still used for orphan marker placement and zoom fallbacks for
+ * franchises that have no polygon data (all PO-box only ZIPs).
  */
 
 // ----- Config -----
-const ZIP_DOT_RADIUS = 3.5;        // base circle radius in screen px
-const ZIP_DOT_OPACITY = 0.72;
+const POLY_FILL_OPACITY = 0.45;
+const POLY_STROKE_COLOR = '#1f2937';
+const POLY_STROKE_WEIGHT = 1;
+const POLY_STROKE_OPACITY = 0.7;
 const ORPHAN_RADIUS = 7;
 const ORPHAN_COLOR = '#ff1a1a';
 const ORPHAN_HALO_COLOR = '#ffffff';
@@ -42,13 +45,14 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r
 
 // ----- State -----
 const state = {
-  franchises: {},       // keyed by numeric id (string form)
-  centroids: {},        // "zip" -> [lat, lon]
-  orphans: [],          // array of orphan objects
+  franchises: {},          // keyed by numeric id (string form)
+  centroids: {},           // "zip" -> [lat, lon]
+  franchisePolygons: {},   // fid (string) -> GeoJSON Feature (Polygon/MultiPolygon/GeometryCollection)
+  orphans: [],             // array of orphan objects
   myFranchiseIds: new Set(),
-  layers: {},           // franchiseId -> L.LayerGroup of zip circles
-  orphanLayer: null,    // L.LayerGroup of orphan markers
-  visible: new Set(),   // franchiseIds currently shown
+  layers: {},              // franchiseId -> L.GeoJSON (or L.LayerGroup for franchises w/o polygons)
+  orphanLayer: null,       // L.LayerGroup of orphan markers
+  visible: new Set(),      // franchiseIds currently shown
   orphansVisible: true,
   orphansOnly: false,
 };
@@ -79,16 +83,22 @@ async function loadJSON(path, label, pctStart, pctEnd) {
 // ----- Boot -----
 (async function init() {
   try {
-    const [franchisesDoc, centroidsDoc, orphansDoc] = await Promise.all([
-      loadJSON('data/franchises.json', 'franchises', 5, 35),
-      loadJSON('data/zip_centroids.json', 'ZIP centroids', 35, 70),
-      loadJSON('data/orphans.json', 'orphans', 70, 85),
+    const [franchisesDoc, centroidsDoc, orphansDoc, polygonsDoc] = await Promise.all([
+      loadJSON('data/franchises.json', 'franchises', 5, 20),
+      loadJSON('data/zip_centroids.json', 'ZIP centroids', 20, 40),
+      loadJSON('data/orphans.json', 'orphans', 40, 50),
+      loadJSON('data/franchise_polygons.json', 'franchise polygons', 50, 85),
     ]);
 
     state.franchises = franchisesDoc.franchises;
     state.centroids = centroidsDoc;
     state.orphans = orphansDoc.orphans;
     state.myFranchiseIds = new Set(franchisesDoc.my_franchises);
+
+    // Index polygons by franchise id (string)
+    for (const f of (polygonsDoc.features || [])) {
+      state.franchisePolygons[String(f.properties.id)] = f;
+    }
 
     setLoad(88, 'Building layers…');
     await new Promise(r => setTimeout(r, 20)); // let UI breathe
@@ -110,38 +120,54 @@ async function loadJSON(path, label, pctStart, pctEnd) {
   }
 })();
 
-// ----- Build one canvas layer per franchise -----
+// ----- Build one polygon layer per franchise -----
 function buildLayers() {
-  const zipToFr = {};
-  for (const [fid, data] of Object.entries(state.franchises)) {
-    for (const z of data.zips) zipToFr[z] = fid;
-    state.layers[fid] = L.layerGroup();
-  }
-
-  // Add a circle per assigned ZIP to its franchise's layer
-  let placed = 0;
-  for (const [zip, ll] of Object.entries(state.centroids)) {
-    const fid = zipToFr[zip];
-    if (!fid) continue;
+  let polyCount = 0;
+  let emptyCount = 0;
+  for (const fid of Object.keys(state.franchises)) {
     const fr = state.franchises[fid];
-    const marker = L.circleMarker(ll, {
-      radius: ZIP_DOT_RADIUS,
-      color: '#1f2937',
-      weight: 0.3,
-      fillColor: fr.color,
-      fillOpacity: ZIP_DOT_OPACITY,
-      renderer: canvasRenderer,
+    const feature = state.franchisePolygons[fid];
+    if (!feature || !feature.geometry) {
+      // No polygon data for this franchise (all PO-box ZIPs, or zero zips).
+      // Use empty LayerGroup so toggle/search still work without errors.
+      state.layers[fid] = L.layerGroup();
+      emptyCount++;
+      continue;
+    }
+    const layer = L.geoJSON(feature, {
+      style: {
+        color: POLY_STROKE_COLOR,
+        weight: POLY_STROKE_WEIGHT,
+        opacity: POLY_STROKE_OPACITY,
+        fillColor: fr.color,
+        fillOpacity: POLY_FILL_OPACITY,
+      },
+      onEachFeature: (feat, lyr) => {
+        const p = feat.properties || {};
+        const gz = p.geom_zip_count ?? fr.zip_count;
+        lyr.bindPopup(
+          `<b style="color:${fr.color}">${escapeHtml(fr.name)}</b><br>` +
+          `${fr.zip_count} ZIPs assigned` +
+          (gz !== fr.zip_count ? ` <span style="color:#94a3b8">(${gz} with polygons)</span>` : '')
+        );
+      },
     });
-    marker.bindPopup(`<b>ZIP ${zip}</b><br><span style="color:${fr.color}; font-weight:600;">${escapeHtml(fr.name)}</span>`);
-    state.layers[fid].addLayer(marker);
-    placed++;
+    state.layers[fid] = layer;
+    polyCount++;
   }
-  console.log(`[sfr-territory-map] placed ${placed} ZIP circles across ${Object.keys(state.layers).length} franchises`);
+  console.log(
+    `[sfr-territory-map] built ${polyCount} franchise polygon layers ` +
+    `(${emptyCount} franchises without polygon data)`
+  );
 
-  // Orphan layer — bright red circles with white halo, rendered on top
+  // Orphan layer — bright red circles with white halo, rendered on top.
+  // Positions come from state.centroids since orphans.json no longer stores lat/lon.
   const orphanLayer = L.layerGroup();
+  let orphansPlaced = 0;
   for (const o of state.orphans) {
-    const halo = L.circleMarker([o.lat, o.lon], {
+    const ll = state.centroids[o.zip];
+    if (!ll) continue;
+    const halo = L.circleMarker(ll, {
       radius: ORPHAN_RADIUS + 2,
       color: ORPHAN_HALO_COLOR,
       weight: 2,
@@ -149,7 +175,7 @@ function buildLayers() {
       fillOpacity: 0.0,
       renderer: canvasRenderer,
     });
-    const ring = L.circleMarker([o.lat, o.lon], {
+    const ring = L.circleMarker(ll, {
       radius: ORPHAN_RADIUS,
       color: ORPHAN_COLOR,
       weight: 2.5,
@@ -161,15 +187,16 @@ function buildLayers() {
     ring.bindPopup(
       `<b style="color:${ORPHAN_COLOR}">ORPHAN ZIP ${o.zip}</b><br>` +
       `Surrounded by <b>${escapeHtml(o.surrounded_by_name)}</b> territory ` +
-      `(${o.neighbor_vote}/${o.k} nearest neighbors)<br>` +
+      `(${o.neighbor_vote}/${o.neighbor_count} adjacent polygons)<br>` +
       `Currently: ${cur}`
     );
     orphanLayer.addLayer(halo);
     orphanLayer.addLayer(ring);
+    orphansPlaced++;
   }
   state.orphanLayer = orphanLayer;
   orphanLayer.addTo(map);
-  console.log(`[sfr-territory-map] placed ${state.orphans.length} orphan markers`);
+  console.log(`[sfr-territory-map] placed ${orphansPlaced} orphan markers`);
 }
 
 // ----- Build the right-side control panel -----
@@ -276,7 +303,7 @@ function applyQuickFilter(kind) {
   const rows = list.querySelectorAll('.f-row');
 
   if (kind === 'orphans') {
-    // Hide all franchise circles, show only orphan layer
+    // Hide all franchise polygons, show only orphan layer
     rows.forEach(row => {
       const cb = row.querySelector('input');
       cb.checked = false;
@@ -346,11 +373,21 @@ function setOrphanVisibility(on) {
 function zoomToFranchise(fid) {
   const fr = state.franchises[fid];
   if (!fr) return;
-  const coords = fr.zips
-    .map(z => state.centroids[z])
-    .filter(Boolean);
-  if (!coords.length) return;
-  const bounds = L.latLngBounds(coords);
+
+  // Prefer polygon bounds when available — more accurate than centroid cloud.
+  let bounds = null;
+  const layer = state.layers[fid];
+  if (layer && typeof layer.getBounds === 'function') {
+    try {
+      const b = layer.getBounds();
+      if (b && b.isValid()) bounds = b;
+    } catch (e) { /* fall through to centroid fallback */ }
+  }
+  if (!bounds) {
+    const coords = fr.zips.map(z => state.centroids[z]).filter(Boolean);
+    if (!coords.length) return;
+    bounds = L.latLngBounds(coords);
+  }
   map.flyToBounds(bounds.pad(0.15), { duration: 0.8 });
 
   // turn it on if not already
@@ -362,18 +399,32 @@ function zoomToFranchise(fid) {
 }
 
 function zoomToMyFranchises() {
-  const coords = [];
+  let bounds = null;
   for (const fid of state.myFranchiseIds) {
-    const fr = state.franchises[fid];
-    if (!fr) continue;
-    for (const z of fr.zips) {
-      const ll = state.centroids[z];
-      if (ll) coords.push(ll);
+    const layer = state.layers[String(fid)];
+    if (layer && typeof layer.getBounds === 'function') {
+      try {
+        const b = layer.getBounds();
+        if (b && b.isValid()) {
+          bounds = bounds ? bounds.extend(b) : L.latLngBounds(b.getSouthWest(), b.getNorthEast());
+        }
+      } catch (e) { /* ignore */ }
     }
   }
-  if (coords.length) {
-    map.fitBounds(L.latLngBounds(coords).pad(0.1));
+  if (!bounds) {
+    // fallback: centroids
+    const coords = [];
+    for (const fid of state.myFranchiseIds) {
+      const fr = state.franchises[String(fid)];
+      if (!fr) continue;
+      for (const z of fr.zips) {
+        const ll = state.centroids[z];
+        if (ll) coords.push(ll);
+      }
+    }
+    if (coords.length) bounds = L.latLngBounds(coords);
   }
+  if (bounds) map.fitBounds(bounds.pad(0.1));
 }
 
 function setHeaderStats(counts, orphanCounts) {
