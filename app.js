@@ -65,7 +65,44 @@ const state = {
   orphansVisible: true,
   orphansOnly: false,
   hoverTooltip: null,      // L.tooltip instance used for the current hover
+  zipToCounty: {},         // "27330" -> {city, county, state} — loaded async from GitHub crosswalk
 };
+
+// Converts "BEAR CREEK" or "bear creek" -> "Bear Creek"
+function toTitle(s) {
+  if (!s) return s;
+  return String(s).toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
+}
+
+// Async fetch the ZIP → county crosswalk so every assigned ZIP's hover tooltip
+// can include city + county. Loads in background; tooltips work before it lands
+// (just without the county line), and re-render after it completes.
+async function loadCountyCrosswalk() {
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv');
+    if (!res.ok) return {};
+    const text = await res.text();
+    const lines = text.split('\n');
+    const header = lines[0].split(',');
+    const iZip = header.indexOf('zipcode');
+    const iState = header.indexOf('state_abbr');
+    const iCounty = header.indexOf('county');
+    const iCity = header.indexOf('city');
+    const map = {};
+    for (let i = 1; i < lines.length; i++) {
+      const parts = lines[i].split(',');
+      if (parts.length < 6) continue;
+      const zip = parts[iZip].padStart(5, '0');
+      if (!map[zip]) {
+        map[zip] = { city: parts[iCity], county: parts[iCounty], state: parts[iState] };
+      }
+    }
+    return map;
+  } catch (e) {
+    console.warn('[sfr-territory-map] county crosswalk failed to load:', e);
+    return {};
+  }
+}
 
 // ----- Loading UI -----
 const loadBar = document.getElementById('load-bar');
@@ -96,6 +133,9 @@ async function loadJSON(path, label, pctStart, pctEnd) {
 // ----- Boot -----
 (async function init() {
   try {
+    // Kick off the county crosswalk in parallel — don't block the map on it.
+    const countyPromise = loadCountyCrosswalk();
+
     const [franchisesDoc, centroidsDoc, orphansDoc, zctaDoc, orphanPolysDoc] = await Promise.all([
       loadJSON('data/franchises.json', 'franchises', 5, 10),
       loadJSON('data/zip_centroids.json', 'ZIP centroids', 10, 20),
@@ -103,6 +143,13 @@ async function loadJSON(path, label, pctStart, pctEnd) {
       loadJSON('data/zcta_polygons.json', 'ZIP polygons', 25, 78),
       loadJSON('data/orphan_polygons.json', 'orphan overlay', 78, 85),
     ]);
+
+    // Stash the crosswalk once it arrives (usually by now); tooltips look it up live.
+    countyPromise.then(map => {
+      state.zipToCounty = map;
+      const n = Object.keys(map).length;
+      console.log(`[sfr-territory-map] county crosswalk loaded: ${n.toLocaleString()} ZIPs`);
+    });
 
     state.franchises = franchisesDoc.franchises;
     state.centroids = centroidsDoc;
@@ -140,15 +187,30 @@ function buildLayers() {
     (byFranchise[fid] ||= []).push(f);
   }
 
-  // Shared hover handler — sets highlight + tooltip with ZIP + franchise
+  // Shared hover handler — sets highlight + tooltip with ZIP, franchise, and
+  // city/county (once the county crosswalk finishes loading).
   const onFeature = (feat, lyr) => {
     const p = feat.properties || {};
     const fr = state.franchises[String(p.franchise_id)] || {};
     const color = fr.color || '#666';
-    const labelHtml =
-      `<div class="zip-tip"><b>ZIP ${escapeHtml(p.zip || '?')}</b>` +
-      `<span class="swatch-inline" style="background:${color}"></span>` +
-      `<span class="fr">${escapeHtml(fr.name || '?')}</span></div>`;
+
+    const buildLocLine = () => {
+      const m = state.zipToCounty[p.zip];
+      if (!m) return '';
+      const bits = [];
+      if (m.city) bits.push(toTitle(m.city));
+      if (m.county) bits.push(`${m.county} Co.${m.state ? ', ' + m.state : ''}`);
+      return bits.join(' — ');
+    };
+
+    const buildTooltipHtml = () => {
+      const loc = buildLocLine();
+      return `<div class="zip-tip"><b>ZIP ${escapeHtml(p.zip || '?')}</b>` +
+        `<span class="swatch-inline" style="background:${color}"></span>` +
+        `<span class="fr">${escapeHtml(fr.name || '?')}</span>` +
+        (loc ? `<div class="zip-tip-loc">${escapeHtml(loc)}</div>` : '') +
+        `</div>`;
+    };
 
     lyr.on('mouseover', (e) => {
       const t = e.target;
@@ -159,7 +221,9 @@ function buildLayers() {
         fillOpacity: HOVER_FILL_OPACITY,
       });
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) t.bringToFront();
-      t.bindTooltip(labelHtml, {
+      // Re-compute tooltip HTML on each hover so it picks up the county crosswalk
+      // whenever it finishes loading.
+      t.bindTooltip(buildTooltipHtml(), {
         sticky: true,
         direction: 'top',
         offset: [0, -8],
@@ -178,11 +242,13 @@ function buildLayers() {
     });
     // Click = same-info popup (persistent)
     lyr.on('click', (e) => {
+      const loc = buildLocLine();
       L.popup({ offset: [0, -4] })
         .setLatLng(e.latlng)
         .setContent(
           `<b style="color:${color}">ZIP ${escapeHtml(p.zip)}</b><br>` +
           `Franchise: <b>${escapeHtml(fr.name || 'unassigned')}</b><br>` +
+          (loc ? `${escapeHtml(loc)}<br>` : '') +
           (p.state ? `<span style="color:#94a3b8">${escapeHtml(p.state)}</span>` : '')
         )
         .openOn(map);
